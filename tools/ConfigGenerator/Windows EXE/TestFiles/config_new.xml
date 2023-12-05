@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form action="defaultFormHandling.php" method="post" id="2dForm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="form.xsd">
+
+	<fieldset legend="Mandatory Input Files">
+		<field>
+			<label>DEM File:</label>
+			<inputText id="dem_file" name="dem_filename" pattern="[a-zA-Z0-9_]*">
+				"input/dem/asc/case1.dem"
+			</inputText>
+		</field>
+
+		<field>
+			<label>Input Format:</label>
+			<select id="input_format" name="input_format">
+				<option value="BIN">BIN</option>
+				<option value="ASC">ASC</option>
+			</select>
+		</field>
+
+		<field>
+			<label>Outfile Pattern:</label>
+			<inputText id="out_pattern" name="outfile_pattern" pattern="[a-zA-Z0-9_]*">
+				"%s/%s/%s_%02d_%02d"
+			</inputText>
+		</field>
+
+		<field>
+			<label>Output Format:</label>
+			<select id="output_format" name="output_format">
+				<option value="BIN">ASC</option>
+				<option value="ASC">BIN</option>
+			</select>
+		</field>
+
+		<field>
+			<label>Output Pattern:</label>
+			<select id="output_format" name="output_format">
+				<option value="BIN">SEQ</option>
+				<option value="ASC">PAR</option>
+			</select>
+		</field>
+	</fieldset>
+
+	<fieldset legend="Hydrograph and flow locations information">
+		<field>
+			<label>Number of Sources:</label>
+			<inputNumber id="num_sources" name="num_sources" min="1">1</inputNumber>
+		</field>
+
+		<field>
+			<label>Hydrograph Filename:</label>
+			<inputText id="hydrograph_filename" name="hydrograph_filename">
+				"input/strmflow/case01.hyg"
+			</inputText>
+		</field>
+
+		<field>
+			<label>Source Location Filename:</label>
+			<inputText id="src_loc_file" name="src_loc_file">
+				"input/strmflow/case01.txt"
+			</inputText>
+		</field>
+	</fieldset>
+
+	<fieldset legend="Manning input files">
+		<field>
+			<label>Name of Mann File:</label>
+			<inputText id="mann_file" name="n_infile" pattern="[a-zA-Z0-9_]*">
+				"input/mann/asc/case1.mann"
+			</inputText>
+		</field>
+
+		<field>
+			<label>Const MANN:</label>
+			<inputText id="const_mann" name="const_mann" pattern="[a-zA-Z0-9_]*">
+				0.035
+			</inputText>
+		</field>
+	</fieldset>
+
+	<fieldset legend="Runoff related information">
+		<field>
+			<label>Number of Runoffs:</label>
+			<inputNumber id="num_runoffs" name="num_runoffs" min="0">0</inputNumber>
+		</field>
+	</fieldset>
+
+	<fieldset legend="External boundaries">
+		<field>
+			<label>Num Extbc:</label>
+			<inputText id="num_extbc" name="num_extbc" pattern="[a-zA-Z0-9_]*">
+				0
+			</inputText>
+		</field>
+
+		<field>
+			<label>Extbc Dir:</label>
+			<inputText id="extbc_dir" name="extbc_dir" pattern="[a-zA-Z0-9_]*">
+				"input/extbc"
+			</inputText>
+		</field>
+
+		<field>
+			<label>Extbc File:</label>
+			<inputText id="extbc_file" name="extbc_file" pattern="[a-zA-Z0-9_]*">
+				""
+			</inputText>
+		</field>
+	</fieldset>
+
+	<field>
+		<label>Observation Loc File</label>
+		<inputText id="observation_loc_file" name="observation_loc_file" pattern="[a-zA-Z0-9_]*">
+			"input/obs/case01.obs"
+		</inputText>
+	</field>
+
+	<field>
+        <label>Time Series Flag:</label>
+		<select id="time_series_flag" name="time_series_flag">
+			<option value="0">0</option>
+			<option value="1">1</option>
+		</select>
+    </field>
+
+	<field>
+        <label>Print Option:</label>
+        <checkboxList name="print_option">
+            <checkbox id="print_1" value="h">h</checkbox>
+            <checkbox id="print_2" value="u">u</checkbox>
+            <checkbox id="print_3" value="v">v</checkbox>
+        </checkboxList>
+    </field>
+
+	<fieldset legend="Simulation Time">
+		<field>
+			<label>Simulation Start Time (Secs):</label>
+			<inputNumber id="sim_start_time" name="sim_start_time" min="0">
+				0
+			</inputNumber>
+		</field>
+		<field>
+			<label>Simulation Duration (Secs):</label>
+			<inputNumber id="sim_duration" name="sim_duration" min="1">
+				3600
+			</inputNumber>
+		</field>
+	</fieldset>
+
+	<field>
+		<label>Clean Start?:</label>
+		<select id="checkpoint_id" name="checkpoint_id">
+			<option value="0">Yes</option>
+			<option value="1">No</option>
+		</select>
+	</field>
+
+	<fieldset legend="Timestep">
+		<field>
+			<label>Initial Time Step (Secs):</label>
+			<inputNumber id="time_step" name="time_step" min="0">
+				0.01
+			</inputNumber>
+		</field>
+		<field>
+			<label>Time Increment:</label>
+			<select id="checkpoint_id" name="checkpoint_id">
+				<option value="0">Variable</option>
+				<option value="1">Constant</option>
+			</select>
+		</field>
+	</fieldset>
+
+	<field>
+		<label>Print Interval (Secs):</label>
+		<inputNumber id="print_interval" name="print_interval" min="0">
+			60
+		</inputNumber>
+	</field>
+
+	<fieldset legend="Initial input files">
+		<field>
+			<label>H Infile:</label>
+			<inputText id="h_infile" name="h_infile" pattern="[a-zA-Z0-9_]*">
+				"input/initc/inith/asc/case01.inith"
+			</inputText>
+		</field>
+
+		<field>
+			<label>QX Infile:</label>
+			<inputText id="qx_infile" name="qx_infile" pattern="[a-zA-Z0-9_]*">
+				"input/initc/initqx/asc/case01.initqx"
+			</inputText>
+		</field>
+
+		<field>
+			<label>QY Infile:</label>
+			<inputText id="qy_infile" name="qy_infile" pattern="[a-zA-Z0-9_]*">
+				"input/initc/initqy/asc/case01.initqy"
+			</inputText>
+		</field>
+	</fieldset>
+
+	<fieldset legend="Other variables">
+		<field>
+			<label>IT Count:</label>
+			<inputNumber id="it_count" name="it_count" min="0">
+				60
+			</inputNumber>
+		</field>
+
+		<field>
+			<label>Courant:</label>
+			<inputText id="it_count" name="it_count">
+				0.5
+			</inputText>
+		</field>
+
+		<field>
+			<label>H Extra:</label>
+			<inputText id="hextra" name="hextra">
+				0.001
+			</inputText>
+		</field>
+
+		<field>
+			<label>GPU Direct Flag:</label>
+			<inputText id="gpu_direct_flag" name="gpu_direct_flag">
+				0
+			</inputText>
+		</field>
+	</fieldset>
+</form>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form action="defaultFormHandling.php" method="post" id="2dForm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="form.xsd">
+	<fieldset legend="Mandatory Input Files">
+		<field>
+			<label>DEM FILE NAME:</label>
+			<inputText id="dem_file" name="dem_filename" pattern="[a-zA-Z0-9_]*">
+				"input/dem/asc/case1.dem"
+			</inputText>
+		</field>
+		<field>
+			<label>Name of Mann File:</label>
+			<inputText id="mann_file" name="n_infile" pattern="[a-zA-Z0-9_]*">
+				"input/mann/asc/case1.mann"
+			</inputText>
+		</field>
+	</fieldset>
+	<fieldset legend="Format">
+		<field>
+			<label>Input Format:</label>
+			<select id="input_format" name="input_format">
+				<option value="BIN">BIN</option>
+				<option value="ASC">ASC</option>
+			</select>
+		</field>
+		<field>
+			<label>Outfile Pattern:</label>
+			<inputText id="out_pattern" name="outfile_pattern" pattern="[a-zA-Z0-9_]*">
+				"%s/%s/%s_%02d_%02d"
+			</inputText>
+		</field>
+		<field>
+			<label>Output Format:</label>
+			<select id="output_format" name="output_format">
+				<option value="BIN">BIN</option>
+				<option value="ASC">ASC</option>
+			</select>
+		</field>
+		<field>
+			<label>Output Option:</label>
+			<select id="output_option" name="output_option">
+				<option value="PAR">PAR</option>
+				<option value="SEQ">SEQ</option>
+			</select>
+		</field>
+	</fieldset>
+	<fieldset legend="Hydrograph Info">
+		<field>
+			<label>Number of Sources:</label>
+			<inputNumber id="num_sources" name="num_sources" min="1">
+			</inputNumber>
+		</field>
+		<field>
+			<label>Hydrograph Filename:</label>
+			<inputText id="hydorgraph_filename" name="hydorgraph_filename">
+				"input/src/case1.hyg"
+			</inputText>
+		</field>
+		<field>
+			<label>Source Location Filename:</label>
+			<inputText id="src_loc_file" name="src_loc_file">
+				"input/src/case1.src"
+			</inputText>
+		</field>
+	</fieldset>
+	<fieldset legend="Runoff Info">
+		<field>
+			<label>Number of Runoffs:</label>
+			<inputNumber id="num_runoffs" name="num_runoffs" min="0">
+			</inputNumber>
+		</field>
+	</fieldset>
+	<fieldset legend="External Boundaries">
+		<field>
+			<label>Number of External Runoffs:</label>
+			<inputNumber id="num_extbc" name="num_extbc" min="0">
+			</inputNumber>
+		</field>
+		<field>
+			<label>Name of Directory Containing Extbc File:</label>
+			<inputText id="extbc_dir" name="extbc_dir">
+				"input/extbc"
+			</inputText>
+		</field>
+		<field>
+			<label>Name of Extbc File:</label>
+			<inputText id="extbc_file" name="extbc_file">
+				"input/extbc/case1.extbc"
+			</inputText>
+		</field>
+	</fieldset>
+	<fieldset legend="Timeseries">
+		<field>
+			<label>Name of Observation Location File:</label>
+			<inputText id="observation_loc_file" name="observation_loc_file">
+				"input/obs/case1.obs"
+			</inputText>
+		</field>
+		<field>
+			<label>Activate Time Series?:</label>
+			<select id="time_series_flag" name="time_series_flag">
+				<option value="0">Deactivate</option>
+				<option value="1">Activate</option>
+			</select>
+		</field>
+	</fieldset>
+	<field>
+        <label>Print Option:</label>
+        <checkboxList name="Print_option">
+            <checkbox id="print_1" value="h">h</checkbox>
+            <checkbox id="print_2" value="u">u</checkbox>
+            <checkbox id="print_3" value="v">v</checkbox>
+        </checkboxList>
+    </field>
+	<fieldset legend="Simulation Time">
+		<field>
+			<label>Simulation Start Time (Secs):</label>
+			<inputNumber id="sim_start_time" name="sim_start_time" min="0">
+			</inputNumber>
+		</field>
+		<field>
+			<label>Simulation Duration (Secs):</label>
+			<inputNumber id="sim_duration" name="sim_duration" min="1">
+			</inputNumber>
+		</field>
+	</fieldset>
+	<field>
+		<label>Clean Start?:</label>
+		<select id="checkpoint_id" name="checkpoint_id">
+			<option value="0">Yes</option>
+			<option value="1">No</option>
+		</select>
+	</field>
+	<fieldset legend="Timestep">
+		<field>
+			<label>Initial Time Step (Secs):</label>
+			<inputNumber id="time_step" name="time_step" min="0">
+			</inputNumber>
+		</field>
+		<field>
+			<label>Time Increment:</label>
+			<select id="checkpoint_id" name="checkpoint_id">
+				<option value="0">Variable</option>
+				<option value="1">Constant</option>
+			</select>
+		</field>
+	</fieldset>
+	<field>
+		<label>Print Interval (Secs):</label>
+		<inputNumber id="print_interval" name="print_interval" min="0">
+		</inputNumber>
+	</field>
+	<fieldset legend="Other">
+		<field>
+			<label>IT Count:</label>
+			<inputNumber id="it_count" name="it_count" min="0">
+			</inputNumber>
+		</field>
+		<field>
+			<label>Courant Number:</label>
+			<inputNumber id="courant" name="courant">
+			</inputNumber>
+		</field>
+	</fieldset>
+</form>

@@ -1,0 +1,19 @@
+ifdef ACTIVE_GPU
+	CC := nvcc -ccbin CC
+	INC_DIRS := /opt/cray/pe/mpich/8.1.6/ofi/gnu/9.1/include
+	FLAGS := -arch=sm_70 -x cu
+	LIBRARIES := -L$(CUDA_DIR)/targets/ppc64le-linux/lib/stubs -L/opt/cray/pe/mpich/8.1.6/ofi/gnu/9.1/lib -lnvidia-ml
+	DFLAGS := -DACTIVE_GPU=1
+else
+	CC := CC
+	INC_DIRS := /opt/cray/pe/mpich/8.1.6/ofi/gnu/9.1/include
+	FLAGS := -Wall -fopenmp
+	LIBRARIES := -L/opt/cray/pe/mpich/8.1.6/ofi/gnu/9.1/lib 
+	DFLAGS := -DACTIVE_OMP=1
+endif
+
+triton: src/main.cpp
+	if [ ! -d "build" ]; then mkdir build; fi
+	@echo 'Compiling file: $<'
+	$(CC) $(INC_DIRS:%=-I%) $(FLAGS) $(DFLAGS) -O3 $(LIBRARIES) -o "build/$@" "$<" --std=c++11
+	@echo 'Building finished: $@'

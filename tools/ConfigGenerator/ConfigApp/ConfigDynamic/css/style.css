@@ -1,0 +1,182 @@
+/* Base styling */
+body {
+    text-align: center;
+    background-color: white;
+    color: purple;
+}
+
+fieldset {
+    background-color: #F0FFFF;
+}
+
+legend {
+    color: black;
+}
+
+input, select{
+	border: none;
+    color: black;
+}
+
+form {
+  width : 95%;
+  margin: 15px;
+  display: inline-block;
+  
+  -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+     -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+          box-sizing: border-box;
+}
+
+p, ul {
+    text-align: left;
+}
+
+input[type=text], select, input[type=number], input[type=file]{
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.page-content {
+	width: 95%;
+	margin: 2.5%;
+	background-color: white;
+	border-radius: 20px;
+}
+
+/* Button styling */
+
+button {
+	background-color: #8d299f;
+	color: #DFD821;
+	border: none;
+    padding: 10px 24px;
+    -webkit-tranisition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.submitButton {
+    width: 100%;
+    text-align: right;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.submitButton {
+    width: 80%;
+}
+
+button:hover {
+    background-color: #8d299f;
+    color: white;
+}
+
+button:active {
+    background-color: #6d1f7b;
+    color: white;
+}
+
+/* Header styling */
+.header {
+	width: 100%;
+	padding-left: 2.5%;
+	padding-right: 2.5%;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	text-align: center;
+	float: left;
+	background-color: #6b1f7a;
+    border-radius: 20px;
+    color: #DFD821;
+}
+
+h1 {
+	width: 55%;
+	display: inline-block;
+}
+
+.headerImg {
+	max-height: 150px;
+	max-width: 20%;
+	display: inline-block;
+	background: none;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+.coverFileInput {
+	float: left;
+}
+
+/*Checkboxes that are input fields*/
+.switch {
+    margin:10px;
+}
+
+/* Responsive formatting, started small, format for larger and larger screens */
+
+@media screen and (min-width: 412px) {
+    .submitButton {
+        width: 250px;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    label {
+        width: 40%;
+        float: left;
+    }
+    input[type=text], select, input[type=number], input[type=file], .coverFileInput {
+        width: 60%;
+    }
+    .prompt button {
+        width: 30%;
+        padding-top: 6.25%;
+        padding-bottom: 6.25%;
+        margin-left: 5%;
+        margin-right: 5%;
+        font-size: 2em;
+    }
+    
+    .submit {
+        text-align: right;
+    }
+    
+}
+
+@media screen and (min-width: 1000px) {
+    .column {
+        float: left;
+        width: 50%;
+    }
+    .row:after{
+        content: "";
+        display: table;
+        clear: both;
+    }
+    label {
+        width: 38%;
+        margin-top: 1%;
+        margin-bottom: 1%;
+        margin-left: 1%;
+        margin-right: 1%;
+        float: left;
+    }
+    input[type=text], select, input[type=number], input[type=file], .coverFileInput {
+        width: 58%;
+        margin: 1%;
+    }
+    
+    .prompt button {
+        font-size: 3em;
+    }
+}
+
+label {
+    font-weight: bold;
+}

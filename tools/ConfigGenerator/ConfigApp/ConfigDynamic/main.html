@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+        <link href="css/dynamicForm.css" rel="stylesheet" type="text/css">
+		
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		
+        
+        <title>Config Generator</title>
+    </head>
+    
+    <body>
+
+<!--------------------------------------------------------XML-------------------------------------------------------->
+		<div class="page-content">
+			<div class="header">
+				<img src="assets/TTULogo.png" alt="TN Tech Logo" class="headerImg">
+				<h1>Config Generator</h1>
+				<img src="assets/ORNLLogo.png" alt="ORNL Logo" class="headerImg">
+			</div>
+			<div id="content" class="container">
+				<form id="configGenForm" name="gen" method="post" enctype="multipart/form-data">
+					<div class="coverFileInput">
+						<button type="button" onclick="getFile()">Browse Files</button>
+						<text id="placeText" onload="updateText()">Select an .xml file</text>
+					</div>
+					<div style='height: 0px;width:0px; overflow:hidden;'>
+						<input type="file" accept=".xml" id="XMLFilename" name="XMLFilename"></input>
+					</div>
+					<button type="submit">Generate Form</button>
+				</form>
+			</div>
+        </div>
+<!----------------------------------------------------------------------------------------------------------------------->
+		
+		
+		<!--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
+		<script src="js/submit.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+		
+	</body>
+</html>

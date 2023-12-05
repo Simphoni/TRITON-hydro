@@ -1,0 +1,12 @@
+folder="./output_dryrun"
+file="H_30*"
+nprocess=72
+nrows=50000
+ncols=66667
+
+g++ writeHeaderBinary.cpp -lm -o writeHeaderBinary
+n=$((nprocess-1))
+./writeHeaderBinary bin/ $nrows $ncols
+cp $folder/header.bin $folder/merged.bin
+#we need to eliminate the first 16 bytes form the binary files (they contain the header)
+tail -q -c +17 $folder/$file >> bin/merged.bin

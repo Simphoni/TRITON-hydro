@@ -1,0 +1,30 @@
+/* Styling for dynamically generated form elements */
+
+.dynamicCheckboxContent {
+    text-align: right;
+}
+
+.dynamicForm {
+    background-color: white;
+    border-radius: 10px;
+}
+
+.dynamicFieldset {
+    border-color: black;
+    border-radius: 10px;
+}
+
+.dynamicText,
+.dynamicNumber,
+.dynamicSelect,
+.dynamicCheckbox {
+    padding: 5px;
+}
+
+.dynamicFilename {
+    margin-bottom: 5px;
+}
+
+.dynamicSubmit {
+    margin: 5px;
+}

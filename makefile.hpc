@@ -1,0 +1,19 @@
+ifdef ACTIVE_GPU
+	CC := nvcc
+	INC_DIRS := 
+	FLAGS := --compiler-bindir `which mpic++` -arch=sm_70 -x cu
+	LIBRARIES := 
+	DFLAGS := -DACTIVE_GPU=1
+else
+	CC := mpic++
+	INC_DIRS := 
+	FLAGS := -Wall -fopenmp
+	LIBRARIES := 
+	DFLAGS := -DACTIVE_OMP=1
+endif
+
+triton: src/main.cpp
+	if [ ! -d "build" ]; then mkdir build; fi
+	@echo 'Compiling file: $<'
+	$(CC) $(INC_DIRS:%=-I%) $(FLAGS) $(DFLAGS) -O3 $(LIBRARIES) -o "build/$@" "$<" --std=c++17
+	@echo 'Building finished: $@'

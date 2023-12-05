@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form method="post" id="2dForm">
+
+	<field>
+		<label>Name of Dem File:</label>
+		<inputText id="dem_filename" name="dem_filename">
+		</inputText>
+	</field>
+
+	<field>
+        <label>Print Option:</label>
+        <checkboxList name="Print_option">
+            <checkbox id="print_1" value="h">h</checkbox>
+            <checkbox id="print_2" value="u">u</checkbox>
+            <checkbox id="print_3" value="v">v</checkbox>
+        </checkboxList>
+    </field>
+
+</form>

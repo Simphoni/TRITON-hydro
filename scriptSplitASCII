@@ -1,0 +1,165 @@
+#!/bin/bash
+
+function pwait() {
+    while [ $(jobs -p | wc -l) -ge $1 ]; do
+        sleep 1
+    done
+}
+cpus=$( ls -d /sys/devices/system/cpu/cpu[[:digit:]]* | wc -w )
+
+#takes an ASCII DEM and/or MANN/RMAP files and split them into a header (always ASCII) and a number of ASCII or binary files
+
+#variables to be defined by the user (in caps)
+TRITON_DIR="/home/user/fork_tritonmpi/tritonmpi" #TRITON folder
+NFILES=8 #number of files to be split into. It should match the number of subdomains (nranks) in the TRITON simulation
+INPUT_DEM="${TRITON_DIR}/input/dem/asc/case03.dem" #dem file
+IS_MANN="YES" #YES or NO
+INPUT_MANN="${TRITON_DIR}/input/mann/asc/case03.mann" #mann file (needed in case IS_MANN=YES)
+IS_RMAP="YES" #YES or NO
+INPUT_RMAP="${TRITON_DIR}/input/runoff/case03_runoff.rmap" #rmap file (needed in case IS_RMAP=YES)
+OUTPUT_FORMAT="BIN" #ASCII or BIN
+ASCII2BIN_FOLDER="${TRITON_DIR}/tools/ascii2bin/" #ascii2bin folder (needed in case BIN=YES)
+ASCII2BIN_RMAP_FOLDER="${TRITON_DIR}/tools/ascii2bin_rmap/" #ascii2bin_rmap folder (needed in case BIN=YES and IS_RMAP=YES)
+#-----------------------------------------------------------------------------------------------------------------------#
+
+#get the input file until find the character
+input_dir="${INPUT_DEM%/*}"
+#get the number of rows
+nrows=$(sed -ne '2{p;q;}' $INPUT_DEM | cut -c 6-)
+
+#delete until the last . occurrence
+casename_dem="${INPUT_DEM%.*}"
+casename_mann="${INPUT_MANN%.*}"
+casename_rmap="${INPUT_RMAP%.*}"
+
+#create the header file in the same dir as the input dem file
+head -n 6 $INPUT_DEM > "$casename_dem.header"
+
+
+#the partition way should match the way it's done in TRITON
+nlines=$((nrows / NFILES ))
+
+rem=$((nrows % NFILES));
+
+sum=0
+for i in $(seq 0 $((NFILES-2)))
+do
+	line_numbers[$i]=$((sum+nlines))
+	sum=$((sum+nlines))
+	if [ $i -lt $rem ] && [ $rem -gt 0 ]
+	then
+		((line_numbers[$i]++))
+		((sum++))
+	fi
+done
+
+start_index=1                 # The offset to calculate lines
+idx=0                   # The index used in the name of generated files: file1, file2 ...
+
+for i in "${line_numbers[@]}"
+do
+   # Extract the lines using the head and tail commands
+	#pipe the file without the header (6 lines that's why the 7) and split it
+	digit=$(printf '%02d\n' $idx)
+	tail -n+7 $INPUT_DEM | tail -n +$start_index | head -n $(( i-start_index+1 )) > "$casename_dem"_"$digit".dem & 
+	pwait $cpus
+	if [[ $IS_MANN == "YES" ]]
+	then
+		tail -n +$start_index $INPUT_MANN | head -n $(( i-start_index+1 )) > "$casename_mann"_"$digit".mann &
+		pwait $cpus
+	fi
+	if [[ $IS_RMAP == "YES" ]]
+	then
+		tail -n +$start_index $INPUT_RMAP | head -n $(( i-start_index+1 )) > "$casename_rmap"_"$digit".rmap &
+		pwait $cpus
+	fi
+	 echo "Split ASCII file" $idx
+
+    (( idx++ ))
+    start_index=$(( i+1 ))
+done
+
+# Extract the last given lines - last lines in the file
+idx=$((NFILES-1))
+start_index=$((${line_numbers[$NFILES-2]}+1))
+
+# Extract the last given lines - last lines in the file
+digit=$(printf '%02d\n' $idx)
+tail -n+7 $INPUT_DEM | tail -n +$start_index > "$casename_dem"_"$digit".dem
+if [[ $IS_MANN == "YES" ]]
+then
+	tail -n +$start_index $INPUT_MANN > "$casename_mann"_"$digit".mann
+fi
+if [[ $IS_RMAP == "YES" ]]
+then
+	tail -n +$start_index $INPUT_RMAP > "$casename_rmap"_"$digit".rmap
+fi
+echo "Split ASCII file" $idx
+
+echo "ASCII files generated"
+
+
+#convert to binary
+if [[ $OUTPUT_FORMAT == "BIN" ]]
+then
+	echo "Converting to binary..."
+
+	#DEM files
+	input_folder="${INPUT_DEM%/*}/par/"
+	mkdir -p $input_folder && cd $input_folder && rm *.*
+	mv "$casename_dem"_*.dem .  
+	cd ../../
+	output_folder=$(echo "$PWD/bin/par/")
+	mkdir -p $output_folder
+	cd $ASCII2BIN_FOLDER
+	for f in "$input_folder"*.*
+	do
+		filename=$(basename $f)
+		./ascii2bin "$input_folder$filename" "$output_folder$filename" 1 &
+		pwait $cpus
+	done
+	cd $output_folder
+	mv "$casename_dem".header .
+
+	#MANN FILES
+	if [[ $IS_MANN == "YES" ]]
+	then
+		input_folder="${INPUT_MANN%/*}/par/"
+		mkdir -p $input_folder && cd $input_folder && rm *.*
+		mv "$casename_mann"_*.mann .  
+		cd ../../
+		output_folder=$(echo "$PWD/bin/par/")
+		mkdir -p $output_folder
+		cd $ASCII2BIN_FOLDER
+		for f in "$input_folder"*.*
+		do
+			filename=$(basename $f)
+			./ascii2bin "$input_folder$filename" "$output_folder$filename" 1 &
+			pwait $cpus
+		done
+	fi
+
+	if [[ $IS_RMAP == "YES" ]]
+	then
+		#RMAP FILES
+		input_folder="${INPUT_RMAP%/*}/asc/par/"
+		mkdir -p $input_folder && cd $input_folder && rm *.*
+		mv "$casename_rmap"_*.rmap .  
+		cd ../../
+		output_folder=$(echo "$PWD/bin/par/")
+		mkdir -p $output_folder
+		cd $ASCII2BIN_RMAP_FOLDER
+		for f in "$input_folder"*.*
+		do
+			filename=$(basename $f)
+			./ascii2bin_rmap "$input_folder$filename" "$output_folder$filename" 1 &
+			pwait $cpus
+		done
+
+	fi
+
+	cd $TRITON_DIR
+	echo "Succeed! Files converted"
+fi
+
+
